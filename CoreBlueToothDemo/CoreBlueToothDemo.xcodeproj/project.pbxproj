@@ -214,6 +214,11 @@
 					F249F8B51C7CB12C00989105 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = X47A484T7X;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 					F249F8CE1C7CB12D00989105 = {
 						CreatedOnToolsVersion = 7.1;

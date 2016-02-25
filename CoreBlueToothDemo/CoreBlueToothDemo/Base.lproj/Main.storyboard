@@ -196,7 +196,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVo-oq-Ubb">
-                                <rect key="frame" x="142" y="442" width="90" height="44"/>
+                                <rect key="frame" x="87" y="442" width="90" height="44"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="QPr-IM-drU"/>
@@ -210,13 +210,30 @@
                                     <action selector="Start:" destination="yzY-02-rhd" eventType="touchUpInside" id="G6N-PL-63M"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ov-n7-NVC">
+                                <rect key="frame" x="197" y="442" width="90" height="44"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="YeT-JR-ops"/>
+                                    <constraint firstAttribute="height" constant="44" id="u9F-YE-jlt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.018721711901257265" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="Send:" destination="yzY-02-rhd" eventType="touchUpInside" id="U8F-cc-PdU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hVo-oq-Ubb" firstAttribute="centerX" secondItem="oVv-eT-SHW" secondAttribute="centerX" id="79f-Ae-Y7i"/>
+                            <constraint firstItem="hVo-oq-Ubb" firstAttribute="leading" secondItem="oVv-eT-SHW" secondAttribute="leading" id="7hT-L3-lLV"/>
                             <constraint firstItem="oVv-eT-SHW" firstAttribute="centerX" secondItem="7x8-Vk-F8c" secondAttribute="centerX" id="B1X-wZ-VD3"/>
+                            <constraint firstItem="2Ov-n7-NVC" firstAttribute="centerY" secondItem="hVo-oq-Ubb" secondAttribute="centerY" id="Onv-DK-93Z"/>
                             <constraint firstItem="oVv-eT-SHW" firstAttribute="centerY" secondItem="7x8-Vk-F8c" secondAttribute="centerY" id="SoT-k9-JDM"/>
+                            <constraint firstItem="2Ov-n7-NVC" firstAttribute="trailing" secondItem="oVv-eT-SHW" secondAttribute="trailing" id="WFJ-ay-8lf"/>
                             <constraint firstItem="hVo-oq-Ubb" firstAttribute="top" secondItem="oVv-eT-SHW" secondAttribute="bottom" constant="8" id="i2Y-bN-RVc"/>
                         </constraints>
                     </view>
