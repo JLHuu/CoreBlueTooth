@@ -1,10 +1,13 @@
-//
+/*
+ 外围设备管理器设置服务，特征 --> 外围设备管理器发出广播 --> 中心设备管理器发现外围设备 --> 找到需要的外围设备 --> 建立连接 --> 外围设备设置代理（这里在JLCentralViewController中设置）--> 外围设备寻找服务，特征这里在JLCentralViewController中设置） --> 外围设备发送通知，写，读等操作请求(这里在JLCentralViewController中设置） --> 外围设备管理器收到请求（didReceive...Requests），并调用代理方法 --> 外围设备管理器响应请求（respondToRequest）--> 外围设备接收到响应的回调（代理方法，这里在JLCentralViewController中设置）
+ */
 //  JLPeripheralViewController.m
 //  CoreBlueToothDemo
 //
 //  Created by hujiele on 16/2/25.
 //  Copyright © 2016年 JLHuu. All rights reserved.
 //  外围设备通常用于发布服务、生成数据、保存数据。外围设备发布并广播服务，告诉周围的中央设备它的可用服务和特征
+// 中心设备与外围相互交流的流程图
 
 #import "JLPeripheralViewController.h"
 #import <CoreBluetooth/CoreBluetooth.h>
@@ -13,6 +16,7 @@
 #define CharacteristicUUID @"6A3E4B28-522D-4B3B-82A9-D5E2004534FC"
 
 @interface JLPeripheralViewController ()<CBPeripheralManagerDelegate>
+
 - (IBAction)Start:(UIButton *)sender;
 - (IBAction)Send:(UIButton *)sender;
 
@@ -27,11 +31,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     _centrals = [NSMutableArray array];
 }
 - (IBAction)Start:(UIButton *)sender {
-    NSLog(@"1111");
     _PeripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
 }
 
@@ -70,7 +72,7 @@
         NSLog(@"服务启动失败:%@",error);
     }
 }
-// 中心设备订阅特征调用
+// 中心设备订阅特征后调用
 -(void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
     NSLog(@"中心设备订阅特征central:%@,characteristic:%@",central,characteristic);
@@ -84,13 +86,24 @@
 {
     NSLog(@"中心设备取消订阅特征:central%@,characteristic:%@",central,characteristic);
 }
+// 接收到外围设备的Write请求
 -(void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(CBATTRequest *)request{
     NSLog(@"didReceiveWriteRequests");
+    // 响应请求,也可以不响应
+    [peripheral respondToRequest:request withResult:CBATTErrorSuccess];
 }
+// 接收到外围设备的Read请求
+-(void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
+{
+    NSLog(@"didReceiveReadRequest");
+    // 响应
+    [peripheral respondToRequest:request withResult:CBATTErrorSuccess];
+}
+
 -(void)peripheralManager:(CBPeripheralManager *)peripheral willRestoreState:(NSDictionary *)dic{
     NSLog(@"willRestoreState");
 }
-// 更新特征时调用
+// 再次更新特征时调用
 -(void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
 {
     NSLog(@"ReadyToUpdateSubscribers");
@@ -99,8 +112,9 @@
 - (void)_addService
 {
     NSLog(@"添加服务");
-    // 特征
-    _PerCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:CharacteristicUUID] properties:CBCharacteristicPropertyNotify | CBCharacteristicPropertyRead |CBCharacteristicPropertyWrite value:nil permissions:CBAttributePermissionsWriteable];
+    // 特征，这里我只写一个通知的特征
+    _PerCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:CharacteristicUUID] properties:CBCharacteristicPropertyNotify value:nil permissions:CBAttributePermissionsWriteable];
+    // 特征还可以包含很多描述，这里我就不写了，关系就是service--
     // 创建服务
     CBMutableService *service = [[CBMutableService alloc] initWithType:[CBUUID UUIDWithString:ServiceUUID] primary:YES];
     // 设置服务的特征
