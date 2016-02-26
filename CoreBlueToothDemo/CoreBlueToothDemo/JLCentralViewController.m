@@ -50,7 +50,7 @@
     if (central.state == CBCentralManagerStatePoweredOn) {
         NSLog(@"蓝牙设备已打开");
         // 扫描外围设备,serviceUUIDs设为nil会返回所有能扫描到的设备
-        [central scanForPeripheralsWithServices:nil options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@YES}];
+        [central scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:ServiceUUID]] options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@YES}];
         NSLog(@"正在扫描...");
     }else{
         NSLog(@"蓝牙未开启，或不支持");
